@@ -1,0 +1,190 @@
+/* Nachbau der Vereinsseite 1. Sintherner Skatclub 1992 e.V. */
+
+@font-face { font-family: 'Raleway'; font-style: normal; font-weight: 400; font-display: fallback; src: url(../fonts/raleway-400.ttf) format('truetype'); }
+@font-face { font-family: 'Raleway'; font-style: normal; font-weight: 700; font-display: fallback; src: url(../fonts/raleway-700.ttf) format('truetype'); }
+@font-face { font-family: 'Raleway'; font-style: italic; font-weight: 400; font-display: fallback; src: url(../fonts/raleway-400i.ttf) format('truetype'); }
+@font-face { font-family: 'Raleway'; font-style: italic; font-weight: 700; font-display: fallback; src: url(../fonts/raleway-700i.ttf) format('truetype'); }
+
+:root {
+  --blau: #2f469d;        /* Menüleiste */
+  --tuerkis: #4caac9;     /* Inhaltsbereich */
+  --ueberschrift: #d5ebf2;
+  --h3: #0b1e24;
+  --text: #fff;
+  --breite: 1010px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Raleway, sans-serif;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--tuerkis);
+}
+
+.skip { position: absolute; left: -999px; top: 0; background: #fff; color: #000; padding: 8px 12px; z-index: 100; }
+.skip:focus { left: 8px; }
+
+/* ---------- Kopf mit Bannerbild ---------- */
+.kopf {
+  position: relative;
+  height: clamp(260px, 47vw, 480px);
+  background-size: cover;
+  background-position: 50% 50%;
+  background-attachment: fixed;
+}
+@media (hover: none) { .kopf { background-attachment: scroll; } }
+.kopf-leiste {
+  max-width: var(--breite);
+  margin: 0 auto;
+  padding: 14px 20px;
+}
+.marke {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 35px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .7);
+}
+.marke img { height: 70px; width: auto; }
+.pfeil {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 40px;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .7);
+  animation: wippen 2s infinite;
+}
+@keyframes wippen { 50% { transform: translate(-50%, 8px); } }
+
+/* ---------- Menü ---------- */
+.menue {
+  background: var(--blau);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.menue ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: var(--breite);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.menue a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+.menue a:hover, .menue a:focus-visible { background: rgba(255, 255, 255, .15); }
+.menue a.aktiv { text-decoration: underline; text-underline-offset: 6px; }
+.burger { display: none; }
+
+/* ---------- Inhalt ---------- */
+main {
+  max-width: var(--breite);
+  margin: 0 auto;
+  padding: 40px 20px 30px;
+}
+.streifen + .streifen { margin-top: 30px; }
+
+h1, h2 { color: var(--ueberschrift); font-weight: 400; line-height: 1.3; margin: 0 0 .6em; }
+h1 { font-size: 36px; }
+h2 { font-size: 30px; }
+h3 { color: var(--h3); font-size: 24px; font-weight: 400; margin: 0 0 .6em; }
+p { margin: 0 0 .8em; }
+strong, b { font-weight: 700; }
+a { color: #000; }
+.text { margin-bottom: 20px; overflow-wrap: break-word; }
+.text :last-child { margin-bottom: 0; }
+
+.spalten { display: flex; gap: 30px; margin-bottom: 20px; align-items: flex-start; }
+.spalte { flex: 0 1 var(--w, 100%); min-width: 0; }
+.spalte > :last-child { margin-bottom: 0; }
+
+.bild { margin: 0 0 20px; }
+.bild.mitte { margin-left: auto; margin-right: auto; }
+.bild.rechts { margin-left: auto; }
+.bild img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.bild figcaption { font-size: 15px; padding-top: 6px; }
+
+.dokument { margin-bottom: 30px; }
+.dokument iframe { width: 100%; aspect-ratio: 1 / 1.1; border: 0; background: #fff; display: block; }
+.pdf-link { display: inline-block; margin-top: 8px; color: #fff; font-weight: 700; }
+
+.tabelle { overflow-x: auto; margin-bottom: 20px; }
+.tabelle table, .text table { width: 100%; border-collapse: collapse; font-size: 17px; }
+.tabelle th, .tabelle td, .text th, .text td { padding: 8px 10px; text-align: left; vertical-align: top; }
+.tabelle th { background: rgba(0, 0, 0, .25); }
+.tabelle tbody tr:nth-child(odd) { background: rgba(255, 255, 255, .12); }
+
+/* ---------- Fuß ---------- */
+.fuss {
+  text-align: center;
+  padding: 25px 20px;
+  font-size: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .3);
+  max-width: var(--breite);
+  margin: 0 auto;
+}
+.fuss p { margin: 0; }
+
+/* ---------- Lightbox ---------- */
+.lb {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0, 0, 0, .9);
+  display: flex; align-items: center; justify-content: center;
+}
+.lb[hidden] { display: none; }
+.lb img { max-width: 92vw; max-height: 90vh; box-shadow: 0 0 30px #000; }
+.lb button {
+  position: absolute; background: none; border: 0; color: #fff;
+  font-size: 44px; cursor: pointer; padding: 10px 18px; line-height: 1;
+}
+.lb-zu { top: 8px; right: 8px; }
+.lb-zurueck { left: 4px; top: 50%; transform: translateY(-50%); }
+.lb-weiter { right: 4px; top: 50%; transform: translateY(-50%); }
+
+/* ---------- Mobil ---------- */
+@media (max-width: 800px) {
+  body { font-size: 17px; }
+  h2 { font-size: 24px; }
+  .marke { font-size: 24px; }
+  .marke img { height: 52px; }
+  .burger {
+    display: flex; flex-direction: column; gap: 5px;
+    background: none; border: 0; padding: 14px 16px; margin-left: auto; cursor: pointer;
+  }
+  .burger span { width: 28px; height: 3px; background: #fff; display: block; }
+  .menue { display: flex; flex-wrap: wrap; }
+  .menue ul { display: none; width: 100%; flex-direction: column; padding: 0 0 10px; }
+  .menue.offen ul { display: flex; }
+  .menue a { padding: 10px 20px; }
+  .spalten { flex-direction: column; gap: 0; }
+  .spalte { flex-basis: auto; width: 100%; }
+  .bild { max-width: 100% !important; }
+}
+
+@media (max-width: 480px) {
+  .marke { font-size: 19px; gap: 10px; }
+  .marke img { height: 44px; }
+}
+
+@media print {
+  .menue, .pfeil, .lb { display: none !important; }
+  body { background: #fff; color: #000; }
+  h1, h2, h3 { color: #000; }
+}
