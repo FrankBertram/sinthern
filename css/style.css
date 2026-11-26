@@ -131,6 +131,90 @@ a { color: #000; }
 .tabelle th { background: rgba(0, 0, 0, .25); }
 .tabelle tbody tr:nth-child(odd) { background: rgba(255, 255, 255, .12); }
 
+/* ---------- Monatssieger ---------- */
+main.breit { max-width: 1240px; padding-left: 14px; padding-right: 14px; }
+.ms-seite { display: grid; grid-template-columns: 1fr 110px; gap: 20px; align-items: start; }
+.ms-raster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.ms-karte {
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ms-monat {
+  background: var(--blau);
+  font-weight: 700;
+  text-align: center;
+  padding: 6px 8px;
+  font-size: 17px;
+}
+.ms-club { border: 2px solid #f2c94c; background: rgba(242, 201, 76, .16); grid-column: span 2; }
+.ms-club.ms-leer { grid-column: auto; } /* noch offene Clubmeisterschaft: einfache Breite, keine Lücke */
+.ms-club .ms-foto { aspect-ratio: 8 / 5; }
+.ms-club .ms-sieger { font-size: 22px; }
+.ms-club .ms-liste { font-size: 16px; padding-left: 16px; padding-right: 16px; }
+.ms-club .ms-monat { font-size: 19px; }
+.ms-club-kopf { background: #c99a17; color: #fff; }
+.ms-club .ms-foto img { object-fit: contain; object-position: 50% 50%; background: rgba(0, 0, 0, .35); }
+.ms-unter { text-align: center; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; opacity: .9; margin-top: -2px; }
+.menue a.neu { font-weight: 700; }
+.neu-marke {
+  display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 4px;
+  background: #e8423f; color: #fff; font-size: 11px; font-weight: 700;
+  letter-spacing: .05em; vertical-align: 3px; line-height: 1.4;
+}
+.ms-foto { display: block; aspect-ratio: 4 / 5; background: rgba(0, 0, 0, .15); overflow: hidden; }
+.ms-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; cursor: zoom-in; transition: transform .3s; }
+.ms-foto:hover img { transform: scale(1.04); }
+.ms-ohne { display: flex; align-items: center; justify-content: center; }
+.ms-ohne span {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: var(--blau); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px; font-weight: 700; letter-spacing: 1px;
+}
+.ms-sieger { font-weight: 700; font-size: 18px; text-align: center; padding: 10px 8px 4px; color: var(--ueberschrift); }
+.ms-liste { list-style: none; margin: 0; padding: 4px 8px 10px; font-size: 14px; line-height: 1.35; }
+.ms-liste li { display: flex; gap: 6px; padding: 2px 0; border-bottom: 1px dotted rgba(255, 255, 255, .3); }
+.ms-liste li:last-child { border-bottom: 0; }
+.ms-liste li:first-child { font-weight: 700; }
+.ms-platz { width: 1.4em; flex: none; }
+.ms-name { flex: 1; min-width: 0; }
+.ms-pkt { flex: none; font-variant-numeric: tabular-nums; }
+.ms-hinweis { font-size: 13px; text-align: center; padding: 0 8px 10px; opacity: .9; font-style: italic; }
+.ms-leer { min-height: 200px; }
+.ms-leertext {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 20px 14px; font-size: 15px; opacity: .85;
+}
+.ms-leiste { position: sticky; top: 70px; }
+.ms-leiste h2 { font-size: 22px; margin-bottom: 10px; }
+.ms-jahre { display: flex; flex-direction: column; gap: 8px; }
+.ms-jahre button {
+  font: inherit; font-weight: 700; font-size: 18px;
+  padding: 10px 12px; border-radius: 6px; cursor: pointer;
+  background: rgba(255, 255, 255, .15); color: #fff;
+  border: 2px solid rgba(255, 255, 255, .5);
+}
+.ms-jahre button:hover { background: rgba(255, 255, 255, .28); }
+.ms-jahre button.aktiv { background: var(--blau); border-color: #fff; }
+
+@media (max-width: 900px) {
+  .ms-raster { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 800px) {
+  .ms-seite { grid-template-columns: 1fr; }
+  .ms-leiste { position: static; order: -1; }
+  .ms-leiste h2 { display: none; }
+  .ms-jahre { flex-direction: row; flex-wrap: wrap; }
+  .ms-jahre button { flex: 1 0 auto; padding: 8px 10px; }
+  .ms-raster { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .ms-liste { font-size: 13px; padding: 4px 6px 10px; }
+  .ms-sieger { font-size: 16px; }
+}
+
 /* ---------- Fuß ---------- */
 .fuss {
   text-align: center;

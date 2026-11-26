@@ -14,9 +14,10 @@
   if (jahr) jahr.textContent = new Date().getFullYear();
 
   // Lightbox
-  var links = Array.prototype.slice.call(document.querySelectorAll('a.lightbox'));
+  // Links werden beim Klick neu ermittelt, damit auch nachträglich erzeugte Bilder (Monatssieger) gehen
+  var links = [];
   var lb = document.querySelector('.lb');
-  if (!lb || !links.length) return;
+  if (!lb) return;
   var bild = lb.querySelector('img');
   var pos = 0;
 
@@ -33,8 +34,12 @@
     document.body.style.overflow = '';
   }
 
-  links.forEach(function (a, i) {
-    a.addEventListener('click', function (e) { e.preventDefault(); zeige(i); });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a.lightbox');
+    if (!a) return;
+    e.preventDefault();
+    links = Array.prototype.slice.call(document.querySelectorAll('a.lightbox'));
+    zeige(links.indexOf(a));
   });
   lb.querySelector('.lb-zu').addEventListener('click', zu);
   lb.querySelector('.lb-zurueck').addEventListener('click', function (e) { e.stopPropagation(); zeige(pos - 1); });
