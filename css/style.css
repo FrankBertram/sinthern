@@ -49,7 +49,12 @@ body {
   color: #fff;
   text-decoration: none;
   font-size: 35px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, .7);
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .8);
+  background: rgba(20, 30, 70, .72);
+  padding: 8px 20px 8px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .35);
 }
 .marke img { height: 70px; width: auto; }
 .pfeil {
@@ -92,6 +97,20 @@ body {
 .menue a:hover, .menue a:focus-visible { background: rgba(255, 255, 255, .15); }
 .menue a.aktiv { text-decoration: underline; text-underline-offset: 6px; }
 .burger { display: none; }
+
+/* Logo und Vereinsname links im Menü */
+.menue { display: flex; align-items: center; gap: 16px; padding: 0 16px; }
+.menue ul { flex: 1; margin: 0; padding: 0; max-width: none; justify-content: flex-end; }
+.menue a.menue-marke {
+  flex: none; display: flex; align-items: center; gap: 10px;
+  padding: 6px 0; font-size: 18px; font-weight: 700; white-space: nowrap;
+}
+.menue a.menue-marke:hover { background: none; opacity: .9; }
+.menue-marke img { height: 44px; width: auto; display: block; }
+@media (max-width: 1150px) {
+  .menue-marke span { white-space: normal; max-width: 150px; line-height: 1.2; font-size: 16px; }
+  .menue ul a { font-size: 16px; padding: 9px 8px; }
+}
 
 /* ---------- Inhalt ---------- */
 main {
@@ -262,7 +281,8 @@ main.breit { max-width: 1240px; padding-left: 14px; padding-right: 14px; }
 .mg-daten dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
 .mg-dauer { display: block; font-weight: 400; font-size: 13px; color: #5a6d75; }
 .mg-erfolge { list-style: none; margin: 4px 12px 12px; padding: 8px 0 0; border-top: 1px dashed #c9d9df; font-size: 14px; }
-.mg-erfolge li { padding: 1px 0; }
+.mg-erfolge li { padding: 2px 0; }
+.mg-jahre { display: block; font-size: 12px; font-weight: 400; color: #5a6d75; padding-left: 1.5em; }
 .mg-club { font-weight: 700; color: #8a6a0c; }
 .mg-karte > :last-child { margin-bottom: 0; padding-bottom: 12px; }
 .mg-fuss { font-size: 14px; opacity: .9; margin: 14px 0 0; }
@@ -315,8 +335,11 @@ main.breit { max-width: 1240px; padding-left: 14px; padding-right: 14px; }
     background: none; border: 0; padding: 14px 16px; margin-left: auto; cursor: pointer;
   }
   .burger span { width: 28px; height: 3px; background: #fff; display: block; }
-  .menue { display: flex; flex-wrap: wrap; }
-  .menue ul { display: none; width: 100%; flex-direction: column; padding: 0 0 10px; }
+  .menue { display: flex; flex-wrap: wrap; gap: 0; padding: 0 0 0 12px; }
+  .menue-marke span { max-width: none; font-size: 16px; }
+  .menue-marke img { height: 38px; }
+  .menue ul { display: none; flex: none; width: 100%; flex-direction: column; padding: 0 0 10px; }
+  .menue ul a { font-size: 18px; }
   .menue.offen ul { display: flex; }
   .menue a { padding: 10px 20px; }
   .spalten { flex-direction: column; gap: 0; }
