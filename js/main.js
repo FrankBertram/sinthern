@@ -38,7 +38,8 @@
     var a = e.target.closest && e.target.closest('a.lightbox');
     if (!a) return;
     e.preventDefault();
-    links = Array.prototype.slice.call(document.querySelectorAll('a.lightbox'));
+    links = Array.prototype.slice.call(document.querySelectorAll('a.lightbox'))
+      .filter(function (l) { return l === a || l.offsetParent !== null; }); // nur sichtbare Bilder durchblättern
     zeige(links.indexOf(a));
   });
   lb.querySelector('.lb-zu').addEventListener('click', zu);

@@ -297,6 +297,38 @@ main.breit { max-width: 1240px; padding-left: 14px; padding-right: 14px; }
   .mg-ohne span { width: 72px; height: 72px; font-size: 28px; }
 }
 
+/* ---------- Chronik (nach Jahren) ---------- */
+.ch-seite { display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 24px; align-items: start; }
+.ch-kopf { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; margin-bottom: 10px; }
+.ch-kopf h1 { margin: 0; }
+.ch-filter { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.ch-filter button, .ch-jahre button { font-family: inherit; }
+.ch-filter button {
+  font-size: 15px; font-weight: 700; cursor: pointer; padding: 5px 12px; border-radius: 6px;
+  background: rgba(255, 255, 255, .15); color: #fff; border: 2px solid rgba(255, 255, 255, .5);
+}
+.ch-filter button:hover { background: rgba(255, 255, 255, .28); }
+.ch-filter button.aktiv { background: var(--blau); border-color: #fff; }
+.ch-inhalt, .ch-jahr, .ch-teil { min-width: 0; }
+.ch-teil .text { overflow-wrap: anywhere; }
+.ch-titel { display: none; }
+.ch-teil { margin-top: 18px; }
+.ch-art {
+  color: #fff; background: var(--blau); display: inline-block;
+  font-size: 18px; font-weight: 700; padding: 5px 14px; border-radius: 6px; margin: 0 0 16px;
+}
+.ch-teil + .ch-teil { border-top: 2px solid rgba(255, 255, 255, .35); padding-top: 22px; margin-top: 26px; }
+.ch-leer { font-size: 17px; opacity: .9; margin-top: 20px; }
+.ch-jahre { max-height: calc(100vh - 140px); overflow-y: auto; padding-right: 4px; }
+.ch-jahre button { font-size: 16px; padding: 6px 10px; }
+@media (max-width: 800px) {
+  .ch-seite { grid-template-columns: minmax(0, 1fr); }
+  .ch-leiste { position: static; order: -1; }
+  .ch-leiste h2 { display: none; }
+  .ch-jahre { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; max-height: none; padding-bottom: 6px; }
+  .ch-jahre button { flex: none; }
+}
+
 /* ---------- Fuß ---------- */
 .fuss {
   text-align: center;
