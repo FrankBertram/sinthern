@@ -32,8 +32,15 @@
         if (e.platz && !e.clubmeister && namen.indexOf(e.platz[0][0]) >= 0) siege++;
       });
     });
-    Object.keys(CLUB).forEach(function (jahr) {
-      CLUB[jahr].forEach(function (n, i) { if (namen.indexOf(n) >= 0) platz[i].push(jahr); });
+    // Clubmeister: clubmeister-daten.js, sonst Dezember-Eintrag (Jahreswertung) der Monatssieger
+    var club = {};
+    Object.keys(SIEGER).forEach(function (jahr) {
+      var e = SIEGER[jahr][12];
+      if (e && e.clubmeister && e.platz) club[jahr] = e.platz.map(function (p) { return p[0]; });
+    });
+    Object.keys(CLUB).forEach(function (jahr) { club[jahr] = CLUB[jahr]; });
+    Object.keys(club).forEach(function (jahr) {
+      club[jahr].forEach(function (n, i) { if (i < 3 && namen.indexOf(n) >= 0) platz[i].push(jahr); });
     });
     return { siege: siege, platz: platz };
   }
@@ -78,7 +85,9 @@
     seit: function (a, b) { return datum(a.seit) - datum(b.seit) || SORT.name(a, b); }
   };
 
+  var aktuelleSortierung = 'name';
   function zeige(art) {
+    aktuelleSortierung = art;
     LISTE.sort(SORT[art] || SORT.name);
     raster.innerHTML = LISTE.map(karte).join('');
     anzahl.textContent = LISTE.length + ' Mitglieder';
@@ -91,5 +100,7 @@
   Array.prototype.forEach.call(sortKnoepfe, function (b) {
     b.addEventListener('click', function () { zeige(b.dataset.sort); });
   });
+  // nach dem Nachladen aus der Redaktion (js/monatssieger-firebase.js)
+  window.mgNeuZeichnen = function () { zeige(aktuelleSortierung); };
   zeige('name');
 })();
