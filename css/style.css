@@ -100,7 +100,7 @@ body {
 
 /* Logo und Vereinsname links im Menü */
 .menue { display: flex; align-items: center; gap: 16px; padding: 0 16px; }
-.menue ul { flex: 1; margin: 0; padding: 0; max-width: none; justify-content: flex-end; }
+.menue ul { flex: 1; margin: 0; padding: 0; max-width: none; justify-content: center; }
 .menue a.menue-marke {
   flex: none; display: flex; align-items: center; gap: 10px;
   padding: 6px 0; font-size: 18px; font-weight: 700; white-space: nowrap;
