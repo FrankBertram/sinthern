@@ -64,12 +64,12 @@
   function zeige(jahr) {
     if (jahre.indexOf(jahr) < 0) jahr = jahre[0];
     titel.textContent = 'Monatssieger ' + jahr;
-    // Neueste zuerst (Dezember = Clubmeister … Januar); noch offene Monate ohne Ergebnis ans Ende
-    var fertig = [], spaeter = [];
+    // Neueste zuerst (Dezember = Clubmeister … Januar); Monate ohne Eintrag werden nicht angezeigt
+    var monate = [];
     for (var m = 12; m >= 1; m--) {
-      ((DATEN[jahr] || {})[m] || !offen(jahr, m) ? fertig : spaeter).push(m);
+      if ((DATEN[jahr] || {})[m]) monate.push(m);
     }
-    raster.innerHTML = fertig.concat(spaeter.reverse()).map(function (mm) { return karte(jahr, mm); }).join('');
+    raster.innerHTML = monate.map(function (mm) { return karte(jahr, mm); }).join('');
     Array.prototype.forEach.call(leiste.querySelectorAll('button'), function (b) {
       var aktiv = Number(b.dataset.jahr) === jahr;
       b.classList.toggle('aktiv', aktiv);
