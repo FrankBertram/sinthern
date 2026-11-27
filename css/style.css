@@ -389,3 +389,9 @@ main.breit { max-width: 1240px; padding-left: 14px; padding-right: 14px; }
   body { background: #fff; color: #000; }
   h1, h2, h3 { color: #000; }
 }
+
+/* Fußlinks Impressum / Datenschutz */
+.fuss .fuss-links { margin-top: 6px; font-size: 15px; }
+.fuss .fuss-links a { color: inherit; }
+/* noch fehlende Angaben im Impressum, gut sichtbar */
+mark.ergaenzen { background: #ffe066; color: #000; padding: 0 4px; border-radius: 3px; }
