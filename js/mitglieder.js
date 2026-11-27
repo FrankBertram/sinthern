@@ -3,6 +3,7 @@
 (function () {
   var LISTE = (window.MITGLIEDER || []).slice();
   var SIEGER = window.MONATSSIEGER || {};
+  var CLUB = window.CLUBMEISTER || {};
   var raster = document.getElementById('mgRaster');
   var anzahl = document.getElementById('mgAnzahl');
   var sortKnoepfe = document.querySelectorAll('.mg-sort button');
@@ -21,19 +22,22 @@
   }
   function initialen(m) { return (m.vorname.charAt(0) + m.name.charAt(0)).toUpperCase(); }
 
-  // Erfolge je Name sammeln
+  // Erfolge je Name sammeln: Clubmeisterschaft (Platz 1–3 seit 1992) und Monatssiege
   function erfolge(m) {
     var namen = [m.vorname + ' ' + m.name].concat(m.auch || []);
-    var siege = [], club = [];
+    var siege = 0, platz = [[], [], []];
     Object.keys(SIEGER).forEach(function (jahr) {
       Object.keys(SIEGER[jahr]).forEach(function (mon) {
         var e = SIEGER[jahr][mon];
-        if (!e.platz || namen.indexOf(e.platz[0][0]) < 0) return;
-        if (e.clubmeister) club.push(jahr); else siege.push(jahr);
+        if (e.platz && !e.clubmeister && namen.indexOf(e.platz[0][0]) >= 0) siege++;
       });
     });
-    return { siege: siege.length, club: club.sort() };
+    Object.keys(CLUB).forEach(function (jahr) {
+      CLUB[jahr].forEach(function (n, i) { if (namen.indexOf(n) >= 0) platz[i].push(jahr); });
+    });
+    return { siege: siege, platz: platz };
   }
+  function jahresliste(j) { return j.sort().join(', '); }
 
   function karte(m) {
     var seit = datum(m.seit);
@@ -56,7 +60,9 @@
       (jahre < 1 ? 'neu' : jahre + (jahre === 1 ? ' Jahr' : ' Jahre')) + '</span>']);
 
     var e = erfolge(m), erf = [];
-    if (e.club.length) erf.push('<li class="mg-club">🏆 Clubmeister ' + e.club.join(', ') + '</li>');
+    var p = e.platz;
+    if (p[0].length) erf.push('<li class="mg-club">🏆 ' + (p[0].length > 1 ? p[0].length + '× ' : '') + 'Clubmeister' +
+      '<span class="mg-jahre">' + jahresliste(p[0]) + '</span></li>');
     if (e.siege) erf.push('<li>⭐ ' + e.siege + '× Monatssieger</li>');
 
     return '<article class="mg-karte">' + foto +

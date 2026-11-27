@@ -29,7 +29,7 @@ window.MONATSSIEGER = {
     8:  { platz: [['Frank Bertram', 4253], ['Michael Hetz', 3388], ['Klaus Heimann', 3297]], bild: 'bilder/foto-monatssieger-august-2025-frank-bertramimg_9605-high.jpg' },
     9:  { platz: [['Wilfried Puls', 3668], ['Frank Bertram', 3528], ['Kai Faßbender', 3514]], bild: 'bilder/foto-monatssieger-september-2025-w-puls-img_9738-high.jpg' },
     10: { platz: [['Frank Bertram', 4227], ['Herbert Schekerka', 3512], ['Joachim Jeske', 3025]], bild: 'bilder/foto-monatssieger-oktober-2025-frank-bertram-img_9774-high.jpg' },
-    11: { platz: [['Joachim Jeske', 3221], ['Achim Stümpges', 3196], ['Kai Faßbender', 3186]], bild: 'bilder/monatssieger-november-2025-joachim-jeske-img_9990-high.jpg' },
+    11: { platz: [['Joachim Jeske', 3221], ['Joachim Stümpges', 3196], ['Kai Faßbender', 3186]], bild: 'bilder/monatssieger-november-2025-joachim-jeske-img_9990-high.jpg' },
     12: { clubmeister: true, platz: [['Kurt Langer', 31357], ['Frank Bertram', 29549], ['Michael Hetz', 28799]], bild: 'bilder/foto-clubmeisterschaft-2025-img_0175-high.jpg', hinweis: '21 Teilnehmer' }
   },
   2024: {
@@ -40,7 +40,7 @@ window.MONATSSIEGER = {
     5:  { platz: [['Klaus Heimann', 3513], ['Peter Schwarz', 3134], ['Kai Faßbender', 3009]], bild: 'bilder/foto-monatssieger-mai-2024-img_7742-high-kyoak1.jpg' },
     6:  { platz: [['Kai Faßbender', 3765], ['Manfred Hallmann', 3579], ['Heinz Grünenwald', 3236]], bild: 'bilder/foto-monatssieger-juni-2024-img_7824-high.jpg' },
     7:  { platz: [['Peter Schwarz', 5497], ['Kurt Langer', 5106], ['Norbert Götte', 4798]], bild: 'bilder/monatssieger7-juli-2024-img_8180-high.jpg' },
-    8:  { platz: [['Achim Stümpges', 4114], ['Heinz Grünenwald', 3659], ['Kai Faßbender', 3036]], bild: 'bilder/monatssieger8-august-2024-img_8181-high.jpg' },
+    8:  { platz: [['Joachim Stümpges', 4114], ['Heinz Grünenwald', 3659], ['Kai Faßbender', 3036]], bild: 'bilder/monatssieger8-august-2024-img_8181-high.jpg' },
     9:  { platz: [['Kurt Langer', 3319], ['Joachim Jeske', 3201], ['Peter Schwarz', 3163]], bild: 'bilder/monatssieger9-september-2024-kurt-langer-img_8191-high.jpg' },
     10: { platz: [['Frank Kühn', 3496], ['Peter Schwarz', 3306], ['Joachim Jeske', 3239]], bild: 'bilder/foto-monatssieger-oktober-2024-e70e7af9-945b-46dc-aa62-ddfbadf5e7b6-high-phqwei.jpg' },
     11: { platz: [['Heinz Grünenwald', 3477], ['Kai Faßbender', 3401], ['Klaus Heimann', 3221]], bild: 'bilder/foto-monatssieger11-2024-heinz-gr-nenwald-img_7487-high.jpg' },
