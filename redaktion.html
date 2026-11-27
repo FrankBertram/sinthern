@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redaktion | 1. Sintherner Skatclub 1992 e.V.</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="bilder/skatlogo.png">
+<link rel="stylesheet" href="css/style.css?v=2026112706">
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<nav class="menue" aria-label="Hauptmenü">
+  <a class="menue-marke" href="index.html"><img src="bilder/skatlogo.png" alt=""><span>1. Sintherner Skatclub 1992 e.V.</span></a>
+  <button class="burger" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+  <ul>
+    <li><a href="index.html">Startseite</a></li>
+    <li><a href="kontakt.html">Kontakt</a></li>
+    <li><a href="statuten.html">Statuten</a></li>
+    <li><a href="termine.html">Termine</a></li>
+    <li><a href="archiv.html">Archiv</a></li>
+    <li><a href="verb-spielbetrieb.html">Verb_Spielbetrieb</a></li>
+    <li><a href="vereinsgeschichte.html">Vereinsgeschichte</a></li>
+    <li><a href="int-spielbetrieb.html">int_Spielbetrieb</a></li>
+    <li><a href="chronik.html" class="neu">Chronik<span class="neu-marke">NEU</span></a></li>
+    <li><a href="monatssieger.html" class="neu">Monatssieger<span class="neu-marke">NEU</span></a></li>
+    <li><a href="fotos.html">Fotos</a></li>
+    <li><a href="mitglieder.html">Mitglieder</a></li>
+    <li><a href="sonderturniere.html">Sonderturniere</a></li>
+  </ul>
+</nav>
+<main id="inhalt">
+<section class="streifen red-seite">
+<div class="red-kopf"><h1>Redaktion</h1>
+<p class="red-wer"><span id="redNutzer"></span> <button type="button" id="redAbmelden" class="red-knopf klein" hidden>Abmelden</button></p></div>
+
+<div id="redAnmelden" class="text">
+<p>Hier können Beiträge mit Text und Fotos auf der Homepage veröffentlicht werden.</p>
+<p><button type="button" id="redGoogle" class="red-knopf gross">Mit Google anmelden</button></p>
+</div>
+
+<div id="redGesperrt" class="text" hidden>
+<p>Sie sind angemeldet, aber noch nicht für die Redaktion freigeschaltet.</p>
+<p><button type="button" id="redFreischaltung" class="red-knopf gross">✉️ Freischaltung anfordern</button></p>
+<p class="red-klein">Ihre Kennung: <code id="redUid"></code></p>
+</div>
+
+<div id="redArbeit" hidden>
+<form id="redFormular" class="red-formular" onsubmit="return false">
+<h2 id="redFormTitel">Neuer Beitrag</h2>
+<label>Seite<select id="redSeite"></select></label>
+<label>Datum<input type="date" id="redDatum" required></label>
+<label>Überschrift<input type="text" id="redTitel" maxlength="200" placeholder="z. B. Monatssieger November 2026"></label>
+<label>Text<textarea id="redText" rows="10" placeholder="Leerzeile = neuer Absatz"></textarea></label>
+<div class="red-feld"><span>Fotos</span>
+<div id="redFotos" class="red-fotos"></div>
+<button type="button" id="redFotoWahl" class="red-knopf">📷 Foto hinzufügen</button>
+<input type="file" id="redFotoDatei" accept="image/*" multiple hidden>
+</div>
+<p id="redMeldung" class="red-meldung" hidden></p>
+<div class="red-knoepfe">
+<button type="button" id="redVorschauKnopf" class="red-knopf">Vorschau</button>
+<button type="button" id="redSpeichern" class="red-knopf gross">Veröffentlichen</button>
+<button type="button" id="redNeu" class="red-knopf" hidden>Abbrechen / neuer Beitrag</button>
+</div>
+</form>
+<div id="redVorschau" class="red-vorschau"></div>
+
+<h2>Bisherige Beiträge</h2>
+<div id="redListe"><p>Wird geladen …</p></div>
+<p><button type="button" id="redAufraeumen" class="red-knopf" hidden></button></p>
+
+<div id="redAdmin" hidden>
+<h2>Redakteure freischalten</h2>
+<ul id="redRedakteure" class="red-redakteure"></ul>
+<form id="redRedakteurNeu" class="red-zeile">
+<input id="redNeuName" placeholder="Name" required>
+<input id="redNeuUid" placeholder="Kennung (UID) aus der Mail" required>
+<button class="red-knopf">Freischalten</button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<footer class="fuss">
+  <p>&copy; 1992 &ndash; <span class="jahr">2026</span> 1. Sintherner Skatclub 1992 e.V.</p>
+  <p class="fuss-links"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="redaktion.html">Redaktion</a></p>
+</footer>
+<div class="lb" hidden><button class="lb-zu" aria-label="Schließen">&times;</button><button class="lb-vor lb-zurueck" aria-label="Vorheriges Bild">&#10094;</button><img alt=""><button class="lb-vor lb-weiter" aria-label="Nächstes Bild">&#10095;</button></div>
+<script src="js/main.js?v=2026112706"></script>
+<script type="module" src="js/redaktion.js?v=2026112706"></script>
+</body>
+</html>

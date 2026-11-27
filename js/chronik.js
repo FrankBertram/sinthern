@@ -1,10 +1,15 @@
 // Seite „Chronik": ein Jahr anzeigen (Leiste rechts), Filter Club intern / Verband
 (function () {
-  var jahre = Array.prototype.slice.call(document.querySelectorAll('.ch-jahr'));
-  var knoepfe = Array.prototype.slice.call(document.querySelectorAll('#chJahre button'));
+  var jahre, knoepfe;
+  function erfassen() {
+    jahre = Array.prototype.slice.call(document.querySelectorAll('.ch-jahr'));
+    knoepfe = Array.prototype.slice.call(document.querySelectorAll('#chJahre button'));
+  }
+  erfassen();
   var filter = Array.prototype.slice.call(document.querySelectorAll('.ch-filter button'));
   var titel = document.getElementById('chTitel');
   var art = 'alle', jahr = null;
+  var festgelegt = /^#\d{4}$/.test(location.hash); // Jahr per Link oder Klick gewählt
 
   function zeige() {
     jahre.forEach(function (s) {
@@ -50,6 +55,7 @@
   document.getElementById('chJahre').addEventListener('click', function (e) {
     var b = e.target.closest('button');
     if (!b) return;
+    festgelegt = true;
     waehle(Number(b.dataset.jahr));
     // nach oben, damit „Chronik JJJJ" unter dem festen Menü sichtbar ist
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -58,6 +64,12 @@
     b.addEventListener('click', function () { art = b.dataset.art; zeige(); });
   });
   window.addEventListener('hashchange', function () { waehle(Number(location.hash.slice(1))); });
+
+  // Beiträge aus Firebase (js/beitraege.js) können Jahre ergänzen
+  document.addEventListener('beitraege-geladen', function () {
+    erfassen();
+    waehle(festgelegt ? jahr : NaN); // sonst neuestes Jahr
+  });
 
   waehle(Number(location.hash.slice(1)));
 })();
