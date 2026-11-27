@@ -73,9 +73,68 @@ $('redFreischaltung').addEventListener('click', function () {
 
 // ---------- Formular ----------
 const seiteWahl = $('redSeite');
-seiteWahl.innerHTML = Object.keys(SEITEN).map(function (s) {
-  return '<option value="' + s + '">' + esc(SEITEN[s].name) + '</option>';
+seiteWahl.innerHTML = '<option value="monatssieger">Monatssieger (Kachel und Int_Spielbetrieb)</option>' +
+  Object.keys(SEITEN).map(function (s) {
+    return '<option value="' + s + '">' + esc(SEITEN[s].name) + '</option>';
+  }).join('');
+seiteWahl.value = 'int-spielbetrieb';
+
+// ---------- Monatssieger: feste Felder statt Überschrift ----------
+const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August',
+  'September', 'Oktober', 'November', 'Dezember'];
+$('redMsMonat').innerHTML = MONATE.map(function (m, i) {
+  return '<option value="' + (i + 1) + '">' + (i === 11 ? 'Dezember (Clubmeister)' : m) + '</option>';
 }).join('');
+$('redNamen').innerHTML = (window.MITGLIEDER || []).map(function (m) {
+  return '<option value="' + esc(m.vorname + ' ' + m.name) + '">';
+}).join('');
+function istMs() { return seiteWahl.value === 'monatssieger'; }
+function msModus() {
+  $('redMsFelder').hidden = !istMs();
+  $('redTitelFeld').hidden = istMs();
+  $('redTextLabel').textContent = istMs() ? 'Zusätzlicher Text (optional)' : 'Text';
+}
+// Monat/Jahr folgen dem Datum, bis sie von Hand geändert werden
+let msHand = false;
+function msAusDatum() {
+  if (msHand) return;
+  const d = $('redDatum').value;
+  if (/^\d{4}-\d{2}/.test(d)) { $('redMsJahr').value = d.slice(0, 4); $('redMsMonat').value = String(Number(d.slice(5, 7))); }
+}
+seiteWahl.addEventListener('change', msModus);
+$('redDatum').addEventListener('change', msAusDatum);
+$('redMsMonat').addEventListener('change', function () { msHand = true; });
+$('redMsJahr').addEventListener('change', function () { msHand = true; });
+function msLeeren() {
+  msHand = false;
+  for (let i = 1; i <= 3; i++) { $('redMsName' + i).value = ''; $('redMsPkt' + i).value = ''; }
+  $('redMsHinweis').value = '';
+  msAusDatum();
+}
+function msFuellen(ms) {
+  msHand = true;
+  $('redMsJahr').value = ms.jahr;
+  $('redMsMonat').value = String(ms.monat);
+  for (let i = 1; i <= 3; i++) {
+    const p = (ms.platz || [])[i - 1] || {};
+    $('redMsName' + i).value = p.name || '';
+    $('redMsPkt' + i).value = p.punkte || '';
+  }
+  $('redMsHinweis').value = ms.hinweis || '';
+}
+// alter Beitrag ohne feste Felder: „Monatssieger Januar 2027 …" + „Platz 1 Name 4210 Pkt." erkennen
+function msAusText(b) {
+  const m = /^Monatssieger\s+(\S+)\s+(\d{4})/i.exec(b.titel || '');
+  if (!m) return null;
+  const monat = MONATE.findIndex(function (x) { return x.toLowerCase() === m[1].toLowerCase(); }) + 1;
+  if (!monat) return null;
+  const platz = [];
+  const re = /Platz\s*(\d)\.?\s+(.+?)\s+(\d[\d.]*)\s*Pkt/gi;
+  let z;
+  while ((z = re.exec(b.text || ''))) platz[Number(z[1]) - 1] = { name: z[2].trim(), punkte: Number(z[3].replace(/\./g, '')) };
+  if (!platz[0]) return null;
+  return { jahr: Number(m[2]), monat: monat, platz: platz.filter(Boolean) };
+}
 
 function heute() {
   const d = new Date();
@@ -98,6 +157,8 @@ function neuerBeitrag() {
   $('redDatum').value = heute();
   $('redTitel').value = '';
   $('redText').value = '';
+  msLeeren();
+  msModus();
   $('redFormTitel').textContent = 'Neuer Beitrag';
   $('redNeu').hidden = true;
   $('redVorschau').innerHTML = '';
@@ -166,12 +227,41 @@ $('redFotoDatei').addEventListener('change', async function (e) {
 });
 
 function formularDaten() {
-  return {
+  const b = {
     seite: seiteWahl.value,
     datum: $('redDatum').value,
     titel: $('redTitel').value.trim(),
     text: $('redText').value.trim()
   };
+  if (!istMs()) return b;
+  // Monatssieger: Überschrift und Platzierungen werden aus den Feldern erzeugt
+  const jahr = Number($('redMsJahr').value), monat = Number($('redMsMonat').value);
+  const platz = [];
+  for (let i = 1; i <= 3; i++) {
+    const name = $('redMsName' + i).value.trim(), punkte = Number($('redMsPkt' + i).value);
+    if (name) platz.push({ name: name, punkte: punkte || 0 });
+  }
+  const zusatz = b.text;
+  b.seite = 'int-spielbetrieb';
+  b.monatssieger = { jahr: jahr, monat: monat, platz: platz, hinweis: $('redMsHinweis').value.trim(), zusatz: zusatz };
+  b.titel = (monat === 12 ? 'Clubmeister ' + jahr : 'Monatssieger ' + MONATE[monat - 1] + ' ' + jahr) +
+    (platz[0] ? ' ' + platz[0].name : '');
+  b.text = platz.map(function (p, i) {
+    return 'Platz ' + (i + 1) + ' ' + p.name + ' ' + p.punkte.toLocaleString('de-DE') + ' Pkt.';
+  }).join('\n') + (b.monatssieger.hinweis ? '\n(' + b.monatssieger.hinweis + ')' : '') + (zusatz ? '\n\n' + zusatz : '');
+  return b;
+}
+
+function pruefe(b) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(b.datum)) return 'Bitte ein Datum eingeben.';
+  if (b.monatssieger) {
+    const ms = b.monatssieger;
+    if (!(ms.jahr >= 1992 && ms.jahr <= 2100)) return 'Bitte das Jahr eingeben.';
+    if (!ms.platz.length || !ms.platz[0].punkte) return 'Bitte mindestens Platz 1 mit Name und Punkten eingeben.';
+    return '';
+  }
+  if (!b.titel && !b.text && !fotos.length) return 'Bitte Überschrift, Text oder ein Foto eingeben.';
+  return '';
 }
 
 $('redVorschauKnopf').addEventListener('click', function () {
@@ -187,8 +277,8 @@ $('redVorschauKnopf').addEventListener('click', function () {
 
 $('redSpeichern').addEventListener('click', async function () {
   const b = formularDaten();
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(b.datum)) { meldung('Bitte ein Datum eingeben.', true); return; }
-  if (!b.titel && !b.text && !fotos.length) { meldung('Bitte Überschrift, Text oder ein Foto eingeben.', true); return; }
+  const fehler = pruefe(b);
+  if (fehler) { meldung(fehler, true); return; }
   const knopf = $('redSpeichern');
   knopf.disabled = true;
   meldung('Wird veröffentlicht …');
@@ -210,9 +300,10 @@ $('redSpeichern').addEventListener('click', async function () {
       autor: nutzer.displayName || nutzer.email || '', geaendert: fs.serverTimestamp()
     });
     if (!bearbeiteId) daten.erstellt = fs.serverTimestamp();
+    else if (!daten.monatssieger) daten.monatssieger = fs.deleteField();
     await fs.setDoc(ref, daten, { merge: true });
     for (const id of entfernt) await fs.deleteDoc(fs.doc(db, 'homepage_bilder', id)).catch(console.warn);
-    const link = b.seite + '.html#b-' + ref.id;
+    const link = b.monatssieger ? 'monatssieger.html#' + b.monatssieger.jahr : b.seite + '.html#b-' + ref.id;
     neuerBeitrag();
     meldung('');
     $('redMeldung').hidden = false;
@@ -242,7 +333,7 @@ async function ladeListe() {
   if (!beitraege.length) { ziel.innerHTML = '<p>Noch keine Beiträge.</p>'; return; }
   ziel.innerHTML = '<table class="red-tabelle"><thead><tr><th>Datum</th><th>Seite</th><th>Überschrift</th><th></th></tr></thead><tbody>' +
     beitraege.map(function (b) {
-      return '<tr><td>' + esc(datumDeutsch(b.datum)) + '</td><td>' + esc((SEITEN[b.seite] || {}).name || b.seite) +
+      return '<tr><td>' + esc(datumDeutsch(b.datum)) + '</td><td>' + esc(b.monatssieger ? 'Monatssieger' : ((SEITEN[b.seite] || {}).name || b.seite)) +
         '</td><td>' + esc(b.titel || (b.text || '').slice(0, 60)) + (b.bilder && b.bilder.length ? ' 📷' + b.bilder.length : '') +
         (fest.has(b.id) ? '<br><small>fest auf der Homepage – Änderungen hier wirken nicht mehr</small>' : '') +
         '</td><td class="red-aktionen"><a href="' + esc(b.seite) + '.html#b-' + esc(b.id) + '" target="_blank">Ansehen</a>' +
@@ -275,9 +366,17 @@ $('redListe').addEventListener('click', async function (e) {
     neuerBeitrag();
     bearbeiteId = b.id;
     seiteWahl.value = b.seite;
+    const ms = b.monatssieger || msAusText(b);
     $('redDatum').value = b.datum;
     $('redTitel').value = b.titel || '';
     $('redText').value = b.text || '';
+    if (ms) {
+      seiteWahl.value = 'monatssieger';
+      msFuellen(ms);
+      // eigene Felder: nur der Zusatztext bleibt im Textfeld (bei erkannten alten Beiträgen leer)
+      $('redText').value = b.monatssieger ? (b.monatssieger.zusatz || '') : '';
+    }
+    msModus();
     $('redFormTitel').textContent = 'Beitrag ändern';
     $('redNeu').hidden = false;
     $('redFormular').scrollIntoView({ behavior: 'smooth', block: 'start' });

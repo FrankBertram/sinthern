@@ -3,7 +3,8 @@
   var DATEN = window.MONATSSIEGER || {};
   var MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August',
     'September', 'Oktober', 'November', 'Dezember'];
-  var jahre = Object.keys(DATEN).map(Number).sort(function (a, b) { return b - a; });
+  var jahre = [];
+  var festgelegt = /^#\d{4}$/.test(location.hash); // Jahr per Link oder Klick gewählt
   var raster = document.getElementById('msRaster');
   var leiste = document.getElementById('msJahre');
   var titel = document.getElementById('msTitel');
@@ -77,13 +78,24 @@
     if (location.hash !== '#' + jahr) history.replaceState(null, '', '#' + jahr);
   }
 
-  leiste.innerHTML = jahre.map(function (j) {
-    return '<button type="button" data-jahr="' + j + '">' + j + '</button>';
-  }).join('');
+  function leisteAufbauen() {
+    jahre = Object.keys(DATEN).map(Number).sort(function (a, b) { return b - a; });
+    leiste.innerHTML = jahre.map(function (j) {
+      return '<button type="button" data-jahr="' + j + '">' + j + '</button>';
+    }).join('');
+  }
+  leisteAufbauen();
   leiste.addEventListener('click', function (e) {
     var b = e.target.closest('button');
-    if (b) zeige(Number(b.dataset.jahr));
+    if (b) { festgelegt = true; zeige(Number(b.dataset.jahr)); }
   });
+
+  // Monatssieger aus der Redaktion (Firebase, js/monatssieger-firebase.js) ergänzen
+  window.msNeuZeichnen = function () {
+    var aktuell = Number(location.hash.slice(1));
+    leisteAufbauen();
+    zeige(festgelegt && aktuell ? aktuell : jahre[0]);
+  };
   window.addEventListener('hashchange', function () { zeige(Number(location.hash.slice(1))); });
 
   zeige(Number(location.hash.slice(1)) || jahre[0]);

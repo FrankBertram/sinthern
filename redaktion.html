@@ -6,7 +6,7 @@
 <title>Redaktion | 1. Sintherner Skatclub 1992 e.V.</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="bilder/skatlogo.png">
-<link rel="stylesheet" href="css/style.css?v=2026112706">
+<link rel="stylesheet" href="css/style.css?v=2026112707">
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -50,8 +50,18 @@
 <h2 id="redFormTitel">Neuer Beitrag</h2>
 <label>Seite<select id="redSeite"></select></label>
 <label>Datum<input type="date" id="redDatum" required></label>
-<label>Überschrift<input type="text" id="redTitel" maxlength="200" placeholder="z. B. Monatssieger November 2026"></label>
-<label>Text<textarea id="redText" rows="10" placeholder="Leerzeile = neuer Absatz"></textarea></label>
+<fieldset id="redMsFelder" class="red-ms" hidden>
+<legend>Monatssieger</legend>
+<div class="red-ms-zeile"><label>Monat<select id="redMsMonat"></select></label>
+<label>Jahr<input type="number" id="redMsJahr" min="1992" max="2100" inputmode="numeric"></label></div>
+<div class="red-ms-platz"><span>Platz 1</span><input id="redMsName1" list="redNamen" placeholder="Name" autocomplete="off"><input id="redMsPkt1" type="number" inputmode="numeric" placeholder="Punkte"></div>
+<div class="red-ms-platz"><span>Platz 2</span><input id="redMsName2" list="redNamen" placeholder="Name" autocomplete="off"><input id="redMsPkt2" type="number" inputmode="numeric" placeholder="Punkte"></div>
+<div class="red-ms-platz"><span>Platz 3</span><input id="redMsName3" list="redNamen" placeholder="Name" autocomplete="off"><input id="redMsPkt3" type="number" inputmode="numeric" placeholder="Punkte"></div>
+<label>Hinweis (optional)<input id="redMsHinweis" maxlength="80" placeholder="z. B. 3 Wertungstage"></label>
+<datalist id="redNamen"></datalist>
+</fieldset>
+<label id="redTitelFeld">Überschrift<input type="text" id="redTitel" maxlength="200" placeholder="z. B. Pressemitteilung Stadtmeisterschaft"></label>
+<label><span id="redTextLabel">Text</span><textarea id="redText" rows="10" placeholder="Leerzeile = neuer Absatz"></textarea></label>
 <div class="red-feld"><span>Fotos</span>
 <div id="redFotos" class="red-fotos"></div>
 <button type="button" id="redFotoWahl" class="red-knopf">📷 Foto hinzufügen</button>
@@ -87,7 +97,8 @@
   <p class="fuss-links"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="redaktion.html">Redaktion</a></p>
 </footer>
 <div class="lb" hidden><button class="lb-zu" aria-label="Schließen">&times;</button><button class="lb-vor lb-zurueck" aria-label="Vorheriges Bild">&#10094;</button><img alt=""><button class="lb-vor lb-weiter" aria-label="Nächstes Bild">&#10095;</button></div>
-<script src="js/main.js?v=2026112706"></script>
-<script type="module" src="js/redaktion.js?v=2026112706"></script>
+<script src="js/main.js?v=2026112707"></script>
+<script src="js/mitglieder-daten.js?v=2026112707"></script>
+<script type="module" src="js/redaktion.js?v=2026112707"></script>
 </body>
 </html>
