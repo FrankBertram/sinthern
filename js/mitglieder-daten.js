@@ -8,7 +8,8 @@ window.MITGLIEDER = [
     bild: 'bilder/mitglieder/bertram.jpg', original: 'bilder/frank-bertramimg_0285-high.jpg' },
   { vorname: 'Norbert', name: 'Bleckmann', ort: 'Pulheim', jahrgang: 1956, seit: '31.01.2023',
     bild: 'bilder/mitglieder/bleckmann.jpg', original: 'bilder/norbert-bleckmann-img_0296-high.jpg' },
-  { vorname: 'Gottfried', name: 'Böllsterling', ort: '', jahrgang: null, seit: '06.01.2026' },
+  // Gottfried Böllsterling: aus Datenschutzgründen KEIN Foto veröffentlichen (Wunsch 11/2026)
+  { vorname: 'Gottfried', name: 'Böllsterling', ort: '', jahrgang: null, seit: '06.01.2026', keinFoto: true },
   { vorname: 'Jo', name: 'Brand', ort: 'Pulheim', jahrgang: 1949, seit: '10.03.2026',
     bild: 'bilder/mitglieder/brand.jpg', original: 'bilder/foto-neues-mitglied-jo-brand-img_0502-high.jpg' },
   { vorname: 'Heinz', name: 'Bühl', ort: 'Frechen', jahrgang: 1956, seit: '01.08.2022',

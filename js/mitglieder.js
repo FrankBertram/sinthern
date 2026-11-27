@@ -48,7 +48,7 @@
     if (seit.getFullYear() === 1992) marken.push('<span class="mg-marke mg-gruender">Gründungsmitglied</span>');
     if (jahre < 1) marken.push('<span class="mg-marke mg-neu">Neu im Club</span>');
 
-    var foto = m.bild
+    var foto = m.bild && !m.keinFoto
       ? '<a class="mg-foto lightbox" href="' + esc(m.original || m.bild) + '"><img src="' + esc(m.bild) +
         '" alt="' + esc(name) + '" loading="lazy"></a>'
       : '<div class="mg-foto mg-ohne" aria-hidden="true"><span>' + esc(initialen(m)) + '</span></div>';
